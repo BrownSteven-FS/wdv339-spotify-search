@@ -54,5 +54,9 @@ typings/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
+package-lock.json
 
+# database files related to mariadb
+mongodb/*
 
+.DS_Store

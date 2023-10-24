@@ -1,0 +1,22 @@
+version: "1.0"
+
+services:
+  mongo:
+    image: mongo:7.0
+    volumes:
+      - ./mongodb/data:/data/db
+
+  express-api:
+    build:
+      context: ./express
+      dockerfile: Dockerfile
+    image: spotify-express-api
+    ports:
+      - 3001:3001
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+
+networks:
+  spotify:

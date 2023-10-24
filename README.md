@@ -8,7 +8,7 @@ This is my Full Sail Project and Portfolio III Project that leverages the Spotif
 
 - User authentication using OAuth 2.0
 - Express API using Axios
-- Sequelize ORM DB layer
+- MongoDB using Mongoose as a non-relational DB layer
 - Vite React Frontend using TypeScript
 - Spotify API usage to include a general search for
   - Artists
@@ -17,7 +17,18 @@ This is my Full Sail Project and Portfolio III Project that leverages the Spotif
 
 ## Prerequisites
 
-- [NodeJS V18.18 (LTS)](https://nodejs.org/en/blog/release/v18.18.0)
+- [Docker v4.24](https://docs.docker.com/desktop/release-notes/)
+- [Docker Compose V2.20](https://docs.docker.com/compose/release-notes/)
+
+### Used within the containers
+
+#### Container Images
+
+- [NodeJS V20.8.1 (LTS)](https://nodejs.org/en/blog/release/v18.18.0) - We are using the [alpine docker](https://github.com/nodejs/docker-node/blob/6c20762ebfb6ab35c874c4fe540a55ab8fd6c49d/20/alpine3.18/Dockerfile) version
+- [MongoDB V.7.0](https://hub.docker.com/layers/library/mongo/7.0.0/images/sha256-86be2714cae3fbda498f608c67a15c3fd36e7261c5198c2edd8c963f8c4941b4?context=explore)
+
+#### Technology
+
 - [Express V4.18](https://expressjs.com/en/changelog/4x.html)
 - [Axios V1.5.1](https://www.npmjs.com/package/axios)
 - [Vite V4.5](https://www.npmjs.com/package/vite?activeTab=versions)
@@ -27,9 +38,9 @@ This is my Full Sail Project and Portfolio III Project that leverages the Spotif
 
 I have created some scripts to facilitate ease of setup and use of the application. To get started, from the root directory, run
 
-`npm start`
+`./start.sh`
 
-This will install the application (Vite frontend and Express Backend), build the react application (React), and start the servers.
+This will kick off the docker compose file which will install the application (Vite frontend and Express Backend), connect the database (MariaDB), build the react application (React), and start the servers.
 
 ## Links
 
