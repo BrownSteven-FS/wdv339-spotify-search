@@ -1,13 +1,14 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { Route, Routes } from "react-router-dom";
+import { LoginPage, NotFoundPage } from "./pages";
 
 function App() {
   return (
     <>
-      <div>
-        <h1>Test</h1>
-        <p className="text-xl font-bold">Spotify App</p>
-      </div>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </>
   );
 }
