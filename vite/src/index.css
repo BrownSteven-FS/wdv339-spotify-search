@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  body {
+    @apply font-sans text-base antialiased font-normal;
+  }
+  h2 {
+    @apply font-bold text-2xl p-2;
+  }
+  p {
+    @apply m-4;
+  }
+  button {
+    @apply px-16 py-2 bg-primary rounded-md text-white font-semibold text-lg;
+  }
+}
