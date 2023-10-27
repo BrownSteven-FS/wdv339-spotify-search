@@ -22,9 +22,9 @@ app.get("/", (req, res) => {
       message = "MongoDB disconnecting";
       break;
   }
-
   res.send(message);
 });
+
 // add middleware to handle errors and bad url paths
 app.use((req, res, next) => {
   const error = new Error("Not found");
