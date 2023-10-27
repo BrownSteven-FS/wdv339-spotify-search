@@ -26,6 +26,7 @@ This is my Full Sail Project and Portfolio III Project that leverages the Spotif
 
 - [NodeJS V20.8.1 (LTS)](https://nodejs.org/en/blog/release/v18.18.0) - We are using the [alpine docker](https://github.com/nodejs/docker-node/blob/6c20762ebfb6ab35c874c4fe540a55ab8fd6c49d/20/alpine3.18/Dockerfile) version
 - [MongoDB V.7.0](https://hub.docker.com/layers/library/mongo/7.0.0/images/sha256-86be2714cae3fbda498f608c67a15c3fd36e7261c5198c2edd8c963f8c4941b4?context=explore)
+- [Nginx alpine3.18-slim](https://hub.docker.com/_/nginx)
 
 #### Technology
 
