@@ -3,14 +3,11 @@ const app = express();
 const middleware = require("./middleware");
 const mongoose = require("mongoose");
 
-const authRouter = require("./api/routes/authRoutes");
-
-/* OAuth Strategy */
-require("./lib/auth");
+const spotifyRouter = require("./api/routes/spotifyRoutes");
 
 middleware(app);
 
-app.use("/auth", authRouter);
+app.use("/spotify", spotifyRouter);
 
 app.get("/", (req, res) => {
   const state = mongoose.connection.readyState;
