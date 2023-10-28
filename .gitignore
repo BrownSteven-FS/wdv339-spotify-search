@@ -60,3 +60,5 @@ package-lock.json
 mongodb/*
 
 .DS_Store
+
+*.vite

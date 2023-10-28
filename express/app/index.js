@@ -2,7 +2,12 @@ const express = require("express");
 const app = express();
 const middleware = require("./middleware");
 const mongoose = require("mongoose");
+
+const spotifyRouter = require("./api/routes/spotifyRoutes");
+
 middleware(app);
+
+app.use("/spotify", spotifyRouter);
 
 app.get("/", (req, res) => {
   const state = mongoose.connection.readyState;
