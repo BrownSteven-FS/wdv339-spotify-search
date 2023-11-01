@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { SearchContext } from "../providers/SearchProvider";
 
 export default function Searchbar() {
-  const [search, setSearch] = useState("");
+  const { query, setQuery, search } = useContext(SearchContext);
+  const handleOnBlur = () => {
+    if (query.length > 3) {
+      search();
+    }
+  };
+
   return (
     <fieldset className="flex items-center justify-center">
       <legend className="sr-only">Search</legend>
@@ -12,8 +19,9 @@ export default function Searchbar() {
       />
       <input
         type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onBlur={handleOnBlur}
         placeholder="Search"
         className="text-xl w-96 border-b border-white text-white bg-transparent placeholder:text-neutral-50 placeholder:text-base"
       />

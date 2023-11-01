@@ -1,3 +1,4 @@
+const axios = require("axios");
 const crypto = require("crypto");
 const { Types } = require("mongoose");
 const Token = require("../models/tokenModel");
@@ -70,4 +71,36 @@ const validateToken = async (req, res, next) => {
   }
 };
 
-module.exports = { spotifyCallback, spotifyAuth, logout, validateToken };
+const searchSpotify = async (req, res, next) => {
+  const { term } = req.query;
+  if (!term) return next({ message: "Search term missing", status: 400 });
+
+  try {
+    const { accessToken } = req.token;
+    const { data } = await axios.get("https://api.spotify.com/v1/search", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      params: {
+        q: term,
+        type: "artist,track,album",
+        limit: 5,
+      },
+    });
+    const response = {
+      artists: data.artists ? data.artists.items : [],
+      songs: data.tracks ? data.tracks.items : [],
+      albums: data.albums ? data.albums.items : [],
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  searchSpotify,
+  spotifyCallback,
+  spotifyAuth,
+  logout,
+  validateToken,
+};

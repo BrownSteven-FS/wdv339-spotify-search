@@ -1,5 +1,5 @@
 import { useState, createContext, ReactNode, useEffect } from "react";
-import { API_BASE } from "../lib/helpers";
+import { SPOTIFY_ENDPOINT } from "../lib/endpoints";
 
 interface AuthContextType {
   token: string | null;
@@ -31,8 +31,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const SPOTIFY_URL = `${API_BASE}/spotify`;
-
   let ignore = false;
   useEffect(() => {
     const revalidateToken = async () => {
@@ -42,7 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const storedToken = JSON.parse(storedTokenJSON);
         /* If the token is not valid JSON, it will be caught here */
 
-        const response = await fetch(`${SPOTIFY_URL}/validate`, {
+        const response = await fetch(`${SPOTIFY_ENDPOINT}/validate`, {
           method: "GET",
           headers: { Authorization: storedToken },
         });
@@ -77,13 +75,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const initiateSpotifyLogin = () => {
-    window.location.href = SPOTIFY_URL;
+    window.location.href = SPOTIFY_ENDPOINT;
   };
 
   const logout = async () => {
     try {
       if (token)
-        await fetch(`${SPOTIFY_URL}/logout`, {
+        await fetch(`${SPOTIFY_ENDPOINT}/logout`, {
           method: "GET",
           headers: { Authorization: token },
         });
