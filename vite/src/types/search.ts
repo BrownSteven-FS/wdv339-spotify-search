@@ -1,5 +1,6 @@
-export interface SearchResults  {
-    artists: {},
-    albums: {},
-    songs: {},
-}
+export interface SearchResults {
+    artists: SpotifyItem[];
+    albums: SpotifyItem[];
+    tracks: SpotifyItem[];
+  }
+  

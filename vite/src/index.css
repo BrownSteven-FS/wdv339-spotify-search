@@ -5,13 +5,25 @@
   body {
     @apply font-sans text-base antialiased font-normal;
   }
+  header {
+    @apply px-8;
+  }
   h2 {
-    @apply font-bold text-2xl p-2;
+    @apply p-2 text-2xl font-bold;
+  }
+  h3 {
+    @apply p-2 text-2xl font-semibold;
   }
   p {
     @apply m-4;
   }
   button {
-    @apply px-16 py-2 bg-primary rounded-md text-white font-semibold text-lg;
+    @apply py-2 text-lg font-semibold text-white rounded-md bg-primary;
+  }
+}
+
+@layer components {
+  button.primary {
+    @apply px-8;
   }
 }

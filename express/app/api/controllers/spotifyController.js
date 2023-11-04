@@ -4,6 +4,7 @@ const { Types } = require("mongoose");
 const Token = require("../models/tokenModel");
 const { generateJWT, extractTokenId } = require("../../lib/jwtUtils");
 const { requestSpotifyToken } = require("../../lib/spotifyUtils");
+const { transformResult } = require("../../lib/transform");
 
 const API_URL = process.env.API_URL || "http://localhost:8080/api/v1";
 
@@ -80,16 +81,28 @@ const searchSpotify = async (req, res, next) => {
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {
-        q: term,
+        q: `${term}`,
         type: "artist,track,album",
-        limit: 5,
+        limit: 3,
       },
     });
+
+    console.log(data.albums.items[0]);
     const response = {
-      artists: data.artists ? data.artists.items : [],
-      songs: data.tracks ? data.tracks.items : [],
-      albums: data.albums ? data.albums.items : [],
+      artists:
+        data.artists && data.artists.items
+          ? transformResult(data.artists.items)
+          : [],
+      tracks:
+        data.tracks && data.tracks.items
+          ? transformResult(data.tracks.items)
+          : [],
+      albums:
+        data.albums && data.albums.items
+          ? transformResult(data.albums.items)
+          : [],
     };
+    console.log("response", response);
 
     res.status(200).json(response);
   } catch (error) {
