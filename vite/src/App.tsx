@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow flex justify-center">
+      <main className="flex justify-center flex-grow py-4 md:py-8">
         {!isLoading ? (
           <Routes>
             <Route

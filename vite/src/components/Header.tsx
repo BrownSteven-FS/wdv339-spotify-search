@@ -14,11 +14,11 @@ export default function Header() {
     navigate("/");
   };
   return (
-    <header className="bg-primary p-4 flex justify-between items-center">
+    <header className="flex items-center justify-between py-4 bg-primary">
       <img src={spotifyLogo} alt="Spotify logo" className="h-12" />
       <Searchbar />
       <button onClick={handleLogout}>
-        <FaUserCircle className="text-white h-8 w-8" />
+        <FaUserCircle className="w-8 h-8 text-white" />
       </button>
     </header>
   );
