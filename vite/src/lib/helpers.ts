@@ -16,8 +16,8 @@ export const removeLocalQuery = () => {
     localStorage.removeItem('query')
 }
 export const getLocalQuery = () => {
-    const query: string | null= localStorage.getItem('query')
+    const query: string | null = localStorage.getItem('query')
     if(query)
-        return JSON.parse(query) as SearchResults;
+        return JSON.parse(query) as { query: string, results: SearchResults};
     return null;
 }
