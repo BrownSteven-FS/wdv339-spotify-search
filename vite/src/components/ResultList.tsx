@@ -1,9 +1,9 @@
-import { SearchResults } from "../types/search";
+import { SpotifySearchResults } from "../types/search";
 import { getLocalQuery } from "../lib/helpers";
 import ResultSection from "./ResultSection";
 
 interface ResultListProps {
-  results: SearchResults;
+  results: SpotifySearchResults;
 }
 
 const ResultList: React.FC<ResultListProps> = ({ results }) => {
@@ -20,7 +20,6 @@ const ResultList: React.FC<ResultListProps> = ({ results }) => {
 
       <ResultSection name="artist" results={results.artists} />
       <ResultSection name="albums" results={results.albums} />
-
       <ResultSection name="songs" results={results.tracks} />
     </main>
   );

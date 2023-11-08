@@ -87,22 +87,14 @@ const searchSpotify = async (req, res, next) => {
       },
     });
 
-    console.log(data.albums.items[0]);
     const response = {
       artists:
-        data.artists && data.artists.items
-          ? transformResult(data.artists.items)
-          : [],
+        data.artists && data.artists.items ? transformResult(data.artists) : [],
       tracks:
-        data.tracks && data.tracks.items
-          ? transformResult(data.tracks.items)
-          : [],
+        data.tracks && data.tracks.items ? transformResult(data.tracks) : [],
       albums:
-        data.albums && data.albums.items
-          ? transformResult(data.albums.items)
-          : [],
+        data.albums && data.albums.items ? transformResult(data.albums) : [],
     };
-    console.log("response", response);
 
     res.status(200).json(response);
   } catch (error) {

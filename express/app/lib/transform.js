@@ -1,5 +1,13 @@
-const transformResult = (items) =>
-  items.map((item) => {
+const transformResult = (section) => {
+  const { next, previous, offset, total, limit, items } = section;
+  const metadata = {
+    next,
+    previous,
+    offset,
+    total,
+    limit,
+  };
+  const transformedItems = items.map((item) => {
     switch (item.type) {
       case "track":
         return {
@@ -27,5 +35,7 @@ const transformResult = (items) =>
         };
     }
   });
+  return { items: transformedItems, metadata };
+};
 
 module.exports = { transformResult };

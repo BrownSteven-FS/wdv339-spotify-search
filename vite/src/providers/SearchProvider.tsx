@@ -1,23 +1,30 @@
 import { useState, createContext, ReactNode, useEffect } from "react";
 import { SPOTIFY_ENDPOINT } from "../lib/endpoints";
-import { SearchResults } from "../types/search";
 import { withAuthFetch } from "../lib/withAuth";
 import { getLocalQuery, removeLocalQuery, setLocalQuery } from "../lib/helpers";
+import { SpotifyMetadata, SpotifySearchResults } from "../types/search";
 
 interface SearchContextType {
   search: () => void;
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<any | null>>;
-  searchResults: SearchResults;
+  searchResults: SpotifySearchResults;
   isLoading: boolean;
   isSubmitted: boolean;
   clearSearch: () => void;
 }
+const defaultMetaData: SpotifyMetadata = {
+  next: null,
+  previous: null,
+  offset: 0,
+  total: 0,
+  limit: 3,
+};
 
-const defaultSearchResult: SearchResults = {
-  albums: [],
-  artists: [],
-  tracks: [],
+const defaultSearchResult: SpotifySearchResults = {
+  albums: { items: [], metadata: defaultMetaData },
+  artists: { items: [], metadata: defaultMetaData },
+  tracks: { items: [], metadata: defaultMetaData },
 };
 
 const defaultSearchContext: SearchContextType = {
@@ -44,7 +51,6 @@ export const SearchProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const checkLocalQuery = () => {
       const result = getLocalQuery();
-      console.log(result);
       if (result) {
         setIsSubmitted(true);
         setQuery(result.query);
@@ -60,10 +66,10 @@ export const SearchProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       setIsSubmitted(true);
       const previousQuery = getLocalQuery();
-      if (previousQuery)
+      if (previousQuery !== null)
         if (
           previousQuery.query !== query ||
-          previousQuery.results.artists.length === 0
+          previousQuery.results.artists.items.length === 0
         ) {
           const endpoint = `${SPOTIFY_ENDPOINT}/search?term=${query}`;
           const response = await withAuthFetch(endpoint);
@@ -93,12 +99,12 @@ export const SearchProvider: React.FC<AuthProviderProps> = ({ children }) => {
     <SearchContext.Provider
       value={{
         search,
+        searchResults,
+        clearSearch,
         query,
         setQuery,
-        isSubmitted,
-        searchResults,
         isLoading,
-        clearSearch,
+        isSubmitted,
       }}
     >
       {children}

@@ -1,10 +1,10 @@
 import EmptyAlbumCover from "./EmptyAlbumCover";
 
-interface ResultListingProps {
+interface ResultListItemProps {
   item: SpotifyItem;
 }
 
-const ResultListing: React.FC<ResultListingProps> = ({ item }) => {
+const ResultListItem: React.FC<ResultListItemProps> = ({ item }) => {
   return (
     <a href={item.spotifyLink} target="_blank" className="group">
       <article className="flex flex-col items-center justify-center group group-hover:opacity-60 hover:grayscale">
@@ -28,4 +28,4 @@ const ResultListing: React.FC<ResultListingProps> = ({ item }) => {
   );
 };
 
-export default ResultListing;
+export default ResultListItem;
