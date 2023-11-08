@@ -76,14 +76,16 @@ const searchSpotify = async (req, res, next) => {
   const { term } = req.query;
   if (!term) return next({ message: "Search term missing", status: 400 });
 
+  const { type = "artist,track,album", limit = 3, offset = 0 } = req.query;
   try {
     const { accessToken } = req.token;
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {
         q: `${term}`,
-        type: "artist,track,album",
-        limit: 3,
+        type,
+        limit,
+        offset,
       },
     });
 

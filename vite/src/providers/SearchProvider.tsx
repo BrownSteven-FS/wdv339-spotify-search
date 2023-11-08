@@ -12,6 +12,7 @@ interface SearchContextType {
   isLoading: boolean;
   isSubmitted: boolean;
   clearSearch: () => void;
+  handleUpdate: (url: string) => void;
 }
 const defaultMetaData: SpotifyMetadata = {
   next: null,
@@ -35,6 +36,7 @@ const defaultSearchContext: SearchContextType = {
   isLoading: false,
   isSubmitted: false,
   clearSearch: () => {},
+  handleUpdate: () => {},
 };
 
 interface AuthProviderProps {
@@ -95,6 +97,41 @@ export const SearchProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setSearchResults(defaultSearchResult);
   };
 
+  function getTypeFromUrl(urlString: string) {
+    const url = new URL(urlString);
+    const params = new URLSearchParams(url.search);
+    return params.get("type");
+  }
+
+  const handleUpdate = async (url: string) => {
+    {
+      try {
+        setIsLoading(true);
+        //"https://api.spotify.com/v1/search?query=tester&type=artist&offset=3&limit=3"
+        const searchQuery = url.split("query=");
+        const type = (getTypeFromUrl(url) + "s") as keyof SpotifySearchResults;
+        if (!type || !["artists", "albums", "tracks"].includes(type)) {
+          throw new Error(`Invalid type '${type}' provided to handleUpdate`);
+        }
+        console.log(searchQuery);
+        const endpoint = `${SPOTIFY_ENDPOINT}/search?term=${searchQuery[1]}`;
+        const response = await withAuthFetch(endpoint);
+        if (response.ok) {
+          const data = (await response.json()) as SpotifySearchResults;
+          const newArtists = data[type];
+          setSearchResults({ ...searchResults, [type]: newArtists });
+          // setLocalQuery(query, data);
+          console.log(data);
+        }
+        console.log(response);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   return (
     <SearchContext.Provider
       value={{
@@ -105,6 +142,7 @@ export const SearchProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setQuery,
         isLoading,
         isSubmitted,
+        handleUpdate,
       }}
     >
       {children}
