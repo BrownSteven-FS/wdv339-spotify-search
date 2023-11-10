@@ -1,53 +1,26 @@
-import { useContext } from "react";
-import { SearchResults } from "../types/search";
-import { SearchContext } from "../providers/SearchProvider";
-import ResultListing from "./ResultListing";
+import { SpotifySearchResults } from "../types/search";
+import { getLocalQuery } from "../lib/helpers";
+import ResultSection from "./ResultSection";
 
 interface ResultListProps {
-  results: SearchResults;
+  results: SpotifySearchResults;
 }
 
 const ResultList: React.FC<ResultListProps> = ({ results }) => {
-  const { query } = useContext(SearchContext);
+  const query = getLocalQuery();
 
   return (
-    <main className="my-4 text-center md:my-14">
+    <main className="my-4 text-center ">
       <h2 className="mb-8">
         Search Results for:{" "}
-        <span className="font-serif tracking-wide text-primary">{query}</span>
+        <span className="font-serif tracking-wide text-primary">
+          {query?.query}
+        </span>
       </h2>
 
-      <section>
-        <h3>Artists</h3>
-        {results.artists.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-8 mx-auto max-w-7xl">
-            {results.artists.map((artist, i) => (
-              <ResultListing item={artist} key={`artist-${i}`} />
-            ))}
-          </div>
-        )}
-      </section>
-      <section>
-        <h3>Albums</h3>
-        {results.albums.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-8 mx-auto max-w-7xl">
-            {results.albums.map((album, i) => (
-              <ResultListing item={album} key={`album-${i}`} />
-            ))}
-          </div>
-        )}
-      </section>
-
-      <section>
-        <h3>Songs</h3>
-        {results.tracks.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-8 mx-auto max-w-7xl">
-            {results.tracks.map((track, i) => (
-              <ResultListing item={track} key={`song-${i}`} />
-            ))}
-          </div>
-        )}
-      </section>
+      <ResultSection name="artist" results={results.artists} />
+      <ResultSection name="albums" results={results.albums} />
+      <ResultSection name="songs" results={results.tracks} />
     </main>
   );
 };

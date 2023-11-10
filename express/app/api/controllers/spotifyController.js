@@ -76,33 +76,27 @@ const searchSpotify = async (req, res, next) => {
   const { term } = req.query;
   if (!term) return next({ message: "Search term missing", status: 400 });
 
+  const { type = "artist,track,album", limit = 3, offset = 0 } = req.query;
   try {
     const { accessToken } = req.token;
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {
         q: `${term}`,
-        type: "artist,track,album",
-        limit: 3,
+        type,
+        limit,
+        offset,
       },
     });
 
-    console.log(data.albums.items[0]);
     const response = {
       artists:
-        data.artists && data.artists.items
-          ? transformResult(data.artists.items)
-          : [],
+        data.artists && data.artists.items ? transformResult(data.artists) : [],
       tracks:
-        data.tracks && data.tracks.items
-          ? transformResult(data.tracks.items)
-          : [],
+        data.tracks && data.tracks.items ? transformResult(data.tracks) : [],
       albums:
-        data.albums && data.albums.items
-          ? transformResult(data.albums.items)
-          : [],
+        data.albums && data.albums.items ? transformResult(data.albums) : [],
     };
-    console.log("response", response);
 
     res.status(200).json(response);
   } catch (error) {

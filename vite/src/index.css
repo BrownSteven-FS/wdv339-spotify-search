@@ -9,7 +9,7 @@
     @apply px-8;
   }
   h2 {
-    @apply p-2 text-2xl font-bold;
+    @apply p-2 text-2xl font-bold md:text-3xl;
   }
   h3 {
     @apply p-2 text-2xl font-semibold;
