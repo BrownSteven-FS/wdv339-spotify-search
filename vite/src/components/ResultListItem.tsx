@@ -13,7 +13,7 @@ const ResultListItem: React.FC<ResultListItemProps> = ({ item }) => {
             <img
               src={item.image}
               alt={item.imageAlt}
-              className="z-10 w-auto mb-1 shadow-xl h-28 md:h-40"
+              className="z-10 mb-1 shadow-xl h-28 md:h-40 w-28 md:w-40"
             />
             <figcaption className="sr-only">{item.imageAlt}</figcaption>
           </figure>

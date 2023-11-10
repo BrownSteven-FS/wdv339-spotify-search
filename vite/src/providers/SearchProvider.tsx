@@ -106,7 +106,6 @@ export const SearchProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const handleUpdate = async (url: string) => {
     {
       try {
-        setIsLoading(true);
         //"https://api.spotify.com/v1/search?query=tester&type=artist&offset=3&limit=3"
         const searchQuery = url.split("query=");
         const type = (getTypeFromUrl(url) + "s") as keyof SpotifySearchResults;
@@ -126,8 +125,6 @@ export const SearchProvider: React.FC<AuthProviderProps> = ({ children }) => {
         console.log(response);
       } catch (e) {
         console.error(e);
-      } finally {
-        setIsLoading(false);
       }
     }
   };
