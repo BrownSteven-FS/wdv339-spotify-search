@@ -68,23 +68,23 @@ export const SearchProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       setIsSubmitted(true);
       const previousQuery = getLocalQuery();
-      if (previousQuery !== null)
-        if (
-          previousQuery.query !== query ||
-          previousQuery.results.artists.items.length === 0
-        ) {
-          const endpoint = `${SPOTIFY_ENDPOINT}/search?term=${query}`;
-          const response = await withAuthFetch(endpoint);
-          console.log(response);
-          if (response.ok) {
-            const data = await response.json();
-            setSearchResults(data);
-            setLocalQuery(query, data);
-            console.log(data);
-          }
-        } else {
-          setSearchResults(previousQuery?.results);
+      if (
+        previousQuery === null ||
+        previousQuery.query !== query ||
+        previousQuery?.results.artists.items.length === 0
+      ) {
+        const endpoint = `${SPOTIFY_ENDPOINT}/search?term=${query}`;
+        const response = await withAuthFetch(endpoint);
+        console.log(response);
+        if (response.ok) {
+          const data = await response.json();
+          setSearchResults(data);
+          setLocalQuery(query, data);
+          console.log(data);
         }
+      } else {
+        setSearchResults(previousQuery?.results || defaultSearchResult);
+      }
 
       setIsLoading(false);
     } else {
