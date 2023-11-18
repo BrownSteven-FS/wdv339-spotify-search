@@ -4,7 +4,6 @@ import ResultListItem from "./ResultListItem";
 import { SpotifyCollection } from "../types/search";
 import { useContext, useState } from "react";
 import { SearchContext } from "../providers/SearchProvider";
-import LoadingComponent from "./Loading";
 import LoadingItem from "./LoadingItem";
 
 interface ResultSectionProps {
